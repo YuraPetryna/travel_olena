@@ -1,8 +1,8 @@
 /* =============================================================
    TRAVEL WITH LOVE — Olena Kovalchuk
-   Phase 1 — Base & Motion Canvas
+   Phase 2 — Dark Glass App Shell
    Vanilla JS · zero dependencies · GPU-friendly
-   Controllers: AmbientSea · NavController · Reveal
+   Controllers: AmbientSea · TabView · Reveal
    ============================================================= */
 "use strict";
 
@@ -17,7 +17,8 @@
   const AmbientSea = (() => {
     let canvas, ctx, w, h, dpr, particles, raf = null, running = false;
 
-    const PALETTE = ["58,143,137", "39,107,102", "217,195,162"]; // sea, sea-deep, sand
+    // Dark-mode glow motes — teal/mist tints, screen-blended (see .ambient__canvas)
+    const PALETTE = ["63,201,189", "127,227,218", "217,195,162"]; // sea, sea-mist, sand
 
     const config = {
       density: 0.00008,   // particles per pixel (auto-scaled, capped)
@@ -48,7 +49,7 @@
         sway: 0.4 + Math.random() * 1.1,      // horizontal drift amplitude
         phase: Math.random() * Math.PI * 2,
         freq: 0.002 + Math.random() * 0.004,
-        alpha: 0.12 + Math.random() * 0.28,
+        alpha: 0.05 + Math.random() * 0.14,   // fainter on dark; screen blend supplies the glow
         tint: PALETTE[(Math.random() * PALETTE.length) | 0],
       };
     }
@@ -135,69 +136,136 @@
   })();
 
   /* -----------------------------------------------------------
-     NavController — scroll-spy for the bottom app-nav.
-     Highlights the section currently in view.
+     TabView — native app-like tab navigation.
+     Only the active panel is mounted (display:block); all others
+     are display:none. Switching a tab replays that panel's reveal
+     choreography and fades/slides it in via the CSS ease-out-expo.
   ----------------------------------------------------------- */
-  const NavController = (() => {
-    function init() {
-      const items = Array.from(document.querySelectorAll(".tabbar__item"));
-      if (!items.length) return;
-      const map = new Map(items.map((el) => [el.dataset.nav, el]));
-      const sections = items
-        .map((el) => document.getElementById(el.dataset.nav))
-        .filter(Boolean);
+  const TabView = (() => {
+    let tabs = [];
+    let current = null;
 
-      const setActive = (id) => {
-        items.forEach((el) => el.classList.toggle("is-active", el.dataset.nav === id));
-      };
+    // Single source of truth for the bottom nav — icons + labels defined
+    // once, rendered into the one <nav id="tabbar"> so the component is
+    // guaranteed identical across every tab/state (no duplicated markup).
+    const NAV_ITEMS = [
+      { id: "hero", label: "Головна",
+        icon: '<path d="M4 11 12 4l8 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9h12v-9" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>' },
+      { id: "destinations", label: "Напрямки",
+        icon: '<path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.7"/>' },
+      { id: "reviews", label: "Відгуки",
+        icon: '<path d="m12 4 2.3 4.7 5.2.8-3.7 3.6.9 5.1L12 15.8 7.3 18.2l.9-5.1L4.5 9.5l5.2-.8L12 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' },
+      { id: "contacts", label: "Контакти",
+        icon: '<path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m5 7 7 5 7-5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>' },
+    ];
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && map.has(entry.target.id)) {
-              setActive(entry.target.id);
-            }
-          });
-        },
-        { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
-      );
-      sections.forEach((s) => observer.observe(s));
+    function renderNav() {
+      const bar = document.getElementById("tabbar");
+      if (!bar || bar.childElementCount) return;
+      bar.innerHTML = NAV_ITEMS.map((it) =>
+        `<a class="tabbar__item" href="#${it.id}" data-nav="${it.id}">` +
+          `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">${it.icon}</svg>` +
+          `<span>${it.label}</span>` +
+        `</a>`
+      ).join("");
     }
-    return { init };
+
+    const panelsFor = (id) =>
+      Array.from(document.querySelectorAll(`[data-panel="${id}"]`));
+
+    // Resolve any in-page hash (e.g. #about, #destinations) to its owning panel.
+    function resolvePanel(hash) {
+      if (!hash) return null;
+      const el = document.getElementById(hash);
+      const owner = el && el.closest("[data-panel]");
+      return owner ? owner.dataset.panel : null;
+    }
+
+    function activate(id, opts = {}) {
+      const targets = panelsFor(id);
+      if (!targets.length || id === current) return;
+
+      tabs.forEach((t) => {
+        const on = t.dataset.nav === id;
+        t.classList.toggle("is-active", on);
+        if (on) t.setAttribute("aria-current", "page");
+        else t.removeAttribute("aria-current");
+      });
+
+      document.querySelectorAll("[data-panel]").forEach((p) => {
+        p.classList.toggle("is-active", p.dataset.panel === id);
+      });
+
+      current = id;
+      targets.forEach((p) => Reveal.play(p));
+
+      if (!opts.silent) {
+        try { history.replaceState(null, "", `#${id}`); } catch (_) { /* noop */ }
+        window.scrollTo({ top: 0, behavior: prefersReduced.matches ? "auto" : "smooth" });
+      }
+    }
+
+    function init() {
+      const panels = document.querySelectorAll("[data-panel]");
+      if (!panels.length) return;
+      renderNav();
+      tabs = Array.from(document.querySelectorAll(".tabbar__item"));
+      Reveal.prime();
+
+      const initial = resolvePanel((location.hash || "").slice(1)) || "hero";
+      activate(initial, { silent: true });
+
+      // Delegate every in-page anchor (tab-bar items, CTAs, contact links)
+      // to a tab switch instead of a scroll jump.
+      document.addEventListener("click", (e) => {
+        const link = e.target.closest('a[href^="#"]');
+        if (!link) return;
+        const hash = link.getAttribute("href").slice(1);
+        const panel = resolvePanel(hash);
+        if (!panel) return;
+        e.preventDefault();
+        activate(panel);
+      });
+
+      window.addEventListener("hashchange", () => {
+        const panel = resolvePanel((location.hash || "").slice(1));
+        if (panel) activate(panel);
+      });
+    }
+
+    return { init, activate };
   })();
 
   /* -----------------------------------------------------------
-     Reveal — cinematic staggered entrance via IntersectionObserver.
-     Reads data-reveal-delay for 60ms index stagger.
+     Reveal — cinematic staggered entrance, driven by TabView.
+     prime() wires each node's --reveal-i stagger once; play(root)
+     (re)triggers the choreography whenever its panel is shown.
   ----------------------------------------------------------- */
   const Reveal = (() => {
-    function init() {
-      const nodes = Array.from(document.querySelectorAll("[data-reveal]"));
-      if (!nodes.length) return;
+    function prime() {
+      document.querySelectorAll("[data-reveal][data-reveal-delay]").forEach((n) =>
+        n.style.setProperty("--reveal-i", n.dataset.revealDelay)
+      );
+    }
 
-      nodes.forEach((n) => {
-        if (n.dataset.revealDelay) n.style.setProperty("--reveal-i", n.dataset.revealDelay);
-      });
+    function play(root) {
+      const nodes = Array.from(root.querySelectorAll("[data-reveal]"));
+      if (root.hasAttribute("data-reveal")) nodes.unshift(root);
+      if (!nodes.length) return;
 
       if (prefersReduced.matches) {
         nodes.forEach((n) => n.classList.add("is-in"));
         return;
       }
 
-      const observer = new IntersectionObserver(
-        (entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-in");
-              obs.unobserve(entry.target);
-            }
-          });
-        },
-        { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+      // Reset, then flip on the next frame so re-entering a tab replays.
+      nodes.forEach((n) => n.classList.remove("is-in"));
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => nodes.forEach((n) => n.classList.add("is-in")))
       );
-      nodes.forEach((n) => observer.observe(n));
     }
-    return { init };
+
+    return { prime, play };
   })();
 
   /* -----------------------------------------------------------
@@ -414,8 +482,7 @@
   /* ----------------------------- BOOT ----------------------------- */
   function boot() {
     AmbientSea.init();
-    NavController.init();
-    Reveal.init();
+    TabView.init();
     TourFilter.init();
     TourDrawer.init();
     SaveContact.init();

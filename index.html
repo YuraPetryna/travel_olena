@@ -8,7 +8,7 @@
   <title>Олена Ковальчук — Персональний тревел-агент | Travel with Love</title>
   <meta name="description" content="Олена Ковальчук — персональний тревел-агент та куратор преміальних подорожей. Індивідуальний підбір турів, найкращі ціни та підтримка 24/7 протягом усієї подорожі." />
   <meta name="author" content="Олена Ковальчук" />
-  <meta name="theme-color" content="#f6f2ea" />
+  <meta name="theme-color" content="#0d0d0d" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="profile" />
@@ -44,7 +44,7 @@
   <main class="shell">
 
     <!-- ─────────────── HERO ─────────────── -->
-    <header class="hero" id="hero">
+    <header class="hero" id="hero" data-panel="hero">
       <div class="hero__inner">
 
         <!-- Brand identifier -->
@@ -152,7 +152,7 @@
     </header>
 
     <!-- ─────────────── ABOUT / VALUES ─────────────── -->
-    <section class="section about" id="about" aria-labelledby="about-title">
+    <section class="section about" id="about" data-panel="hero" aria-labelledby="about-title">
       <div class="about__grid">
         <div class="about__intro">
           <p class="eyebrow reveal" data-reveal>Про мене</p>
@@ -173,7 +173,7 @@
         </div>
 
         <ul class="values" role="list">
-          <li class="value reveal" data-reveal data-reveal-delay="2">
+          <li class="value value--wide reveal" data-reveal data-reveal-delay="2">
             <span class="value__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
             </span>
@@ -214,7 +214,7 @@
     </section>
 
     <!-- ─────────────── DESTINATIONS / TOURS ─────────────── -->
-    <section class="section tours" id="destinations" aria-labelledby="tours-title">
+    <section class="section tours" id="destinations" data-panel="destinations" aria-labelledby="tours-title">
       <div class="tours__head">
         <div>
           <p class="eyebrow reveal" data-reveal>Популярні тури</p>
@@ -289,7 +289,7 @@
     </section>
 
     <!-- ─────────────── TESTIMONIALS ─────────────── -->
-    <section class="section reviews" id="reviews" aria-labelledby="reviews-title">
+    <section class="section reviews" id="reviews" data-panel="reviews" aria-labelledby="reviews-title">
       <p class="eyebrow reveal" data-reveal>Відгуки</p>
       <h2 class="section-title reveal" data-reveal data-reveal-delay="1" id="reviews-title">
         Слова, які <em>надихають</em>
@@ -329,7 +329,7 @@
     </section>
 
     <!-- ─────────────── CONTACTS ─────────────── -->
-    <section class="section contacts" id="contacts" aria-labelledby="contacts-title">
+    <section class="section contacts" id="contacts" data-panel="contacts" aria-labelledby="contacts-title">
       <div class="contacts__grid">
         <div class="contacts__intro">
           <p class="eyebrow reveal" data-reveal>Контакти</p>
@@ -425,25 +425,10 @@
     </div>
   </div>
 
-  <!-- ─────────────── BOTTOM NAVIGATION (app shell) ─────────────── -->
-  <nav class="tabbar" aria-label="Головна навігація">
-    <a class="tabbar__item is-active" href="#hero" data-nav="hero">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 11 12 4l8 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9h12v-9" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-      <span>Головна</span>
-    </a>
-    <a class="tabbar__item" href="#destinations" data-nav="destinations">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.7"/></svg>
-      <span>Напрямки</span>
-    </a>
-    <a class="tabbar__item" href="#reviews" data-nav="reviews">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 4 2.3 4.7 5.2.8-3.7 3.6.9 5.1L12 15.8 7.3 18.2l.9-5.1L4.5 9.5l5.2-.8L12 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-      <span>Відгуки</span>
-    </a>
-    <a class="tabbar__item" href="#contacts" data-nav="contacts">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m5 7 7 5 7-5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-      <span>Контакти</span>
-    </a>
-  </nav>
+  <!-- ─────────────── BOTTOM NAVIGATION (app shell) ───────────────
+       Rendered from a single reusable template (NAV_ITEMS in main.js)
+       so icons, labels, order and state stay identical in every state. -->
+  <nav class="tabbar" id="tabbar" aria-label="Головна навігація"></nav>
 
   <!-- Toast host -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
