@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- Primary Meta -->
+  <title>Олена Ковальчук — Персональний тревел-агент | Travel with Love</title>
+  <meta name="description" content="Олена Ковальчук — персональний тревел-агент та куратор преміальних подорожей. Індивідуальний підбір турів, найкращі ціни та підтримка 24/7 протягом усієї подорожі." />
+  <meta name="author" content="Олена Ковальчук" />
+  <meta name="theme-color" content="#f6f2ea" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:locale" content="uk_UA" />
+  <meta property="og:site_name" content="Travel with Love" />
+  <meta property="og:title" content="Олена Ковальчук — Персональний тревел-агент" />
+  <meta property="og:description" content="Створюю незабутні подорожі та найкращий відпочинок для вас. Індивідуальний підхід, преміальна логістика, підтримка 24/7." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Skip link (a11y) -->
+  <a class="skip-link" href="#hero">Перейти до вмісту</a>
+
+  <!-- Ambient background stack : CSS mesh + native canvas sea -->
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient__mesh">
+      <span class="ambient__blob ambient__blob--teal"></span>
+      <span class="ambient__blob ambient__blob--sand"></span>
+      <span class="ambient__blob ambient__blob--sea"></span>
+    </div>
+    <canvas class="ambient__canvas" id="sea-canvas"></canvas>
+    <div class="ambient__noise"></div>
+  </div>
+
+  <!-- ============================ MAIN ============================ -->
+  <main class="shell">
+
+    <!-- ─────────────── HERO ─────────────── -->
+    <header class="hero" id="hero">
+      <div class="hero__inner">
+
+        <!-- Brand identifier -->
+        <div class="hero__brand reveal" data-reveal>
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 29c0-7 0-12 0-16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M16 13c-1-4-4.5-6.5-9-6 2 3.5 5 5.5 9 6Z" fill="currentColor" opacity=".9"/>
+              <path d="M16 13c1-4 4.5-6.5 9-6-2 3.5-5 5.5-9 6Z" fill="currentColor" opacity=".7"/>
+              <path d="M16 12c-1.5-3.5-1-7 1.5-9 1.5 3 1 6.5-1.5 9Z" fill="currentColor" opacity=".8"/>
+            </svg>
+          </span>
+          <span class="brand__name">Travel<span class="brand__amp"> with </span>Love</span>
+        </div>
+
+        <!-- Portrait anchor -->
+        <figure class="hero__portrait reveal" data-reveal data-reveal-delay="1">
+          <div class="hero__portrait-frame">
+            <img
+              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80"
+              alt="Олена Ковальчук, персональний тревел-агент"
+              width="900" height="1100" loading="eager" decoding="async" />
+          </div>
+          <figcaption class="hero__badge">
+            <span class="hero__badge-dot" aria-hidden="true"></span>
+            Онлайн · Відповідаю швидко
+          </figcaption>
+        </figure>
+
+        <!-- Editorial title block -->
+        <div class="hero__copy">
+          <p class="hero__eyebrow reveal" data-reveal data-reveal-delay="1">Персональний тревел-агент</p>
+          <h1 class="hero__title reveal" data-reveal data-reveal-delay="2">
+            Олена <em>Ковальчук</em>
+          </h1>
+          <p class="hero__tagline reveal" data-reveal data-reveal-delay="3">
+            Подорожі, які надихають. Створюю незабутні подорожі та найкращий
+            відпочинок для&nbsp;вас.
+          </p>
+
+          <!-- Primary quick-action matrix -->
+          <ul class="quick" role="list">
+            <li class="reveal" data-reveal data-reveal-delay="4">
+              <a class="quick__hub" href="tel:+380971234567" aria-label="Подзвонити Олені">
+                <span class="quick__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M6.6 3h3l1.5 4-2 1.5a12 12 0 0 0 5 5l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.2 2 2 0 0 1 6.6 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="quick__label">Подзвонити</span>
+              </a>
+            </li>
+            <li class="reveal" data-reveal data-reveal-delay="5">
+              <a class="quick__hub" href="https://wa.me/380971234567" target="_blank" rel="noopener" aria-label="Написати у WhatsApp">
+                <span class="quick__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 8.5c0 4 2.5 6.5 6.5 6.5.6 0 1-.6.8-1.1l-.5-1.2a.8.8 0 0 0-1-.4l-1 .4a4.6 4.6 0 0 1-2.4-2.4l.4-1a.8.8 0 0 0-.4-1l-1.2-.5c-.5-.2-1.1.2-1.1.8Z" fill="currentColor"/></svg>
+                </span>
+                <span class="quick__label">WhatsApp</span>
+              </a>
+            </li>
+            <li class="reveal" data-reveal data-reveal-delay="6">
+              <button class="quick__hub" type="button" data-action="save-contact" aria-label="Додати Олену в контакти">
+                <span class="quick__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M18 7v6M15 10h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                </span>
+                <span class="quick__label">В контакти</span>
+              </button>
+            </li>
+          </ul>
+
+          <!-- Master CTA -->
+          <a class="cta cta--master reveal" data-reveal data-reveal-delay="7" href="#destinations">
+            <span>Підібрати тур</span>
+            <svg class="cta__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <!-- Social proof pillars -->
+        <ul class="pillars reveal" data-reveal data-reveal-delay="8" role="list">
+          <li class="pillar">
+            <span class="pillar__num">8<span class="pillar__plus">+</span></span>
+            <span class="pillar__label">Років досвіду</span>
+          </li>
+          <li class="pillar">
+            <span class="pillar__num">500<span class="pillar__plus">+</span></span>
+            <span class="pillar__label">Щасливих клієнтів</span>
+          </li>
+          <li class="pillar">
+            <span class="pillar__num">24/7</span>
+            <span class="pillar__label">Підтримка</span>
+          </li>
+        </ul>
+
+        <!-- Destination tags -->
+        <nav class="tags reveal" data-reveal data-reveal-delay="9" aria-label="Популярні напрямки">
+          <span class="tags__label">Напрямки</span>
+          <ul role="list">
+            <li>Туреччина</li>
+            <li>Єгипет</li>
+            <li>Греція</li>
+            <li>ОАЕ</li>
+            <li>Таїланд</li>
+          </ul>
+        </nav>
+
+      </div>
+    </header>
+
+    <!-- ─────────────── ABOUT / VALUES ─────────────── -->
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="about__grid">
+        <div class="about__intro">
+          <p class="eyebrow reveal" data-reveal>Про мене</p>
+          <h2 class="section-title reveal" data-reveal data-reveal-delay="1" id="about-title">
+            Ваша подорож — <em>моя турбота</em>
+          </h2>
+          <p class="about__lead reveal" data-reveal data-reveal-delay="2">
+            Мене звати Олена. Вже понад вісім років я створюю подорожі, у які
+            хочеться повертатися. Для мене немає «типових турів» — кожен маршрут
+            я збираю індивідуально: для родин з дітьми, пар та тих, хто мандрує
+            наодинці зі своїми мріями.
+          </p>
+          <p class="about__body reveal" data-reveal data-reveal-delay="3">
+            Ви ділитеся тим, про який відпочинок мрієте, а я беру на себе все
+            інше — підбір готелю, перевірку деталей та підтримку на кожному етапі
+            дороги. Спокійно, надійно та з любов'ю до кожної деталі.
+          </p>
+        </div>
+
+        <ul class="values" role="list">
+          <li class="value reveal" data-reveal data-reveal-delay="2">
+            <span class="value__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <h3 class="value__title">Індивідуальний підхід</h3>
+              <p class="value__text">Кожен тур збирається під ваші бажання, бюджет і темп.</p>
+            </div>
+          </li>
+          <li class="value reveal" data-reveal data-reveal-delay="3">
+            <span class="value__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M7 8h7a2.5 2.5 0 0 1 0 5H9a2.5 2.5 0 0 0 0 5h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <h3 class="value__title">Найкращі ціни</h3>
+              <p class="value__text">Перевірені тури за чесними та вигідними цінами.</p>
+            </div>
+          </li>
+          <li class="value reveal" data-reveal data-reveal-delay="4">
+            <span class="value__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 6v5c0 4.2 3 7.6 7 9 4-1.4 7-4.8 7-9V6l-7-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <h3 class="value__title">Надійність на всіх етапах</h3>
+              <p class="value__text">Від першого повідомлення до повернення додому.</p>
+            </div>
+          </li>
+          <li class="value reveal" data-reveal data-reveal-delay="5">
+            <span class="value__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <h3 class="value__title">Підтримка 24/7</h3>
+              <p class="value__text">Я на зв'язку впродовж усієї вашої подорожі.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ─────────────── DESTINATIONS / TOURS ─────────────── -->
+    <section class="section tours" id="destinations" aria-labelledby="tours-title">
+      <div class="tours__head">
+        <div>
+          <p class="eyebrow reveal" data-reveal>Популярні тури</p>
+          <h2 class="section-title reveal" data-reveal data-reveal-delay="1" id="tours-title">
+            Напрямки, у які <em>закохуєшся</em>
+          </h2>
+        </div>
+        <div class="filter reveal" data-reveal data-reveal-delay="2" role="tablist" aria-label="Фільтр турів">
+          <button class="filter__pill is-active" role="tab" aria-selected="true" data-filter="all" type="button">Всі</button>
+          <button class="filter__pill" role="tab" aria-selected="false" data-filter="beach" type="button">Пляжні</button>
+          <button class="filter__pill" role="tab" aria-selected="false" data-filter="excursion" type="button">Екскурсійні</button>
+          <button class="filter__pill" role="tab" aria-selected="false" data-filter="luxury" type="button">Розкішні</button>
+        </div>
+      </div>
+
+      <ul class="tour-grid" role="list">
+        <li class="tour-card tour-card--lead reveal" data-reveal data-categories="beach luxury">
+          <div class="tour-card__media">
+            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1000&q=80" alt="Пляж та бірюзове море в Анталії, Туреччина" loading="lazy" decoding="async" width="1000" height="700" />
+            <button class="tour-card__save" type="button" aria-pressed="false" aria-label="Зберегти тур">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="tour-card__tag">Туреччина · Анталія</span>
+          </div>
+          <div class="tour-card__body">
+            <h3 class="tour-card__title">Відпочинок у раю</h3>
+            <p class="tour-card__meta">7 ночей • Все включено • 2 дорослих</p>
+            <div class="tour-card__foot">
+              <span class="tour-card__price"><span class="tour-card__from">від</span> $650</span>
+              <button class="tour-card__more" type="button" data-tour="antalya">Детальніше</button>
+            </div>
+          </div>
+        </li>
+
+        <li class="tour-card reveal" data-reveal data-reveal-delay="1" data-categories="beach">
+          <div class="tour-card__media">
+            <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=900&q=80" alt="Червоне море та узбережжя Шарм-ель-Шейха, Єгипет" loading="lazy" decoding="async" width="900" height="700" />
+            <button class="tour-card__save" type="button" aria-pressed="false" aria-label="Зберегти тур">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="tour-card__tag">Єгипет · Шарм-ель-Шейх</span>
+          </div>
+          <div class="tour-card__body">
+            <h3 class="tour-card__title">Сонце та море</h3>
+            <p class="tour-card__meta">7 ночей • Все включено • 2 дорослих</p>
+            <div class="tour-card__foot">
+              <span class="tour-card__price"><span class="tour-card__from">від</span> $590</span>
+              <button class="tour-card__more" type="button" data-tour="sharm">Детальніше</button>
+            </div>
+          </div>
+        </li>
+
+        <li class="tour-card reveal" data-reveal data-reveal-delay="2" data-categories="excursion">
+          <div class="tour-card__media">
+            <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=900&q=80" alt="Біло-блакитні будиночки острова Крит, Греція" loading="lazy" decoding="async" width="900" height="700" />
+            <button class="tour-card__save" type="button" aria-pressed="false" aria-label="Зберегти тур">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="tour-card__tag">Греція · о. Крит</span>
+          </div>
+          <div class="tour-card__body">
+            <h3 class="tour-card__title">Грецька казка</h3>
+            <p class="tour-card__meta">7 ночей • Сніданки • 2 дорослих</p>
+            <div class="tour-card__foot">
+              <span class="tour-card__price"><span class="tour-card__from">від</span> $720</span>
+              <button class="tour-card__more" type="button" data-tour="crete">Детальніше</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <p class="tour-grid__empty" hidden>У цій категорії турів поки немає. Напишіть мені — підберу індивідуально.</p>
+    </section>
+
+    <!-- ─────────────── TESTIMONIALS ─────────────── -->
+    <section class="section reviews" id="reviews" aria-labelledby="reviews-title">
+      <p class="eyebrow reveal" data-reveal>Відгуки</p>
+      <h2 class="section-title reveal" data-reveal data-reveal-delay="1" id="reviews-title">
+        Слова, які <em>надихають</em>
+      </h2>
+
+      <ul class="review-grid" role="list">
+        <li class="review reveal" data-reveal data-reveal-delay="2">
+          <div class="review__stars" aria-label="Оцінка 5 з 5">★★★★★</div>
+          <blockquote class="review__quote">Олена підібрала для нас ідеальний відпочинок! Все було організовано на найвищому рівні. Дякуємо!</blockquote>
+          <figcaption class="review__author">
+            <span class="review__avatar" aria-hidden="true" style="--a:#3a8f89">МІ</span>
+            <span class="review__name">Марія І.</span>
+          </figcaption>
+        </li>
+        <li class="review reveal" data-reveal data-reveal-delay="3">
+          <div class="review__stars" aria-label="Оцінка 5 з 5">★★★★★</div>
+          <blockquote class="review__quote">Чудовий сервіс та підтримка на всіх етапах подорожі. Рекомендую!</blockquote>
+          <figcaption class="review__author">
+            <span class="review__avatar" aria-hidden="true" style="--a:#c9a24b">АП</span>
+            <span class="review__name">Андрій П.</span>
+          </figcaption>
+        </li>
+        <li class="review reveal" data-reveal data-reveal-delay="4">
+          <div class="review__stars" aria-label="Оцінка 5 з 5">★★★★★</div>
+          <blockquote class="review__quote">Подорож до Греції була незабутньою! Обов'язково звернемося ще раз.</blockquote>
+          <figcaption class="review__author">
+            <span class="review__avatar" aria-hidden="true" style="--a:#276b66">ІК</span>
+            <span class="review__name">Ірина К.</span>
+          </figcaption>
+        </li>
+      </ul>
+
+      <a class="btn-ghost reveal" data-reveal data-reveal-delay="5" href="https://wa.me/380971234567" target="_blank" rel="noopener">
+        Показати всі відгуки
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </section>
+
+    <!-- ─────────────── CONTACTS ─────────────── -->
+    <section class="section contacts" id="contacts" aria-labelledby="contacts-title">
+      <div class="contacts__grid">
+        <div class="contacts__intro">
+          <p class="eyebrow reveal" data-reveal>Контакти</p>
+          <h2 class="section-title reveal" data-reveal data-reveal-delay="1" id="contacts-title">
+            Напишіть — <em>і почнемо</em>
+          </h2>
+          <p class="contacts__lead reveal" data-reveal data-reveal-delay="2">
+            Оберіть зручний спосіб зв'язку. Відповідаю швидко у робочі години
+            та залишаюся на зв'язку під час вашої подорожі.
+          </p>
+
+          <ul class="contact-list reveal" data-reveal data-reveal-delay="3" role="list">
+            <li><a class="contact-row" href="tel:+380971234567">
+              <span class="contact-row__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M6.6 3h3l1.5 4-2 1.5a12 12 0 0 0 5 5l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.2 2 2 0 0 1 6.6 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+              <span class="contact-row__text"><strong>Телефон</strong>+38 (097) 123 45 67</span>
+              <span class="contact-row__go" aria-hidden="true">→</span>
+            </a></li>
+            <li><a class="contact-row" href="https://wa.me/380971234567" target="_blank" rel="noopener">
+              <span class="contact-row__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+              <span class="contact-row__text"><strong>WhatsApp</strong>Написати у WhatsApp</span>
+              <span class="contact-row__go" aria-hidden="true">→</span>
+            </a></li>
+            <li><a class="contact-row" href="https://t.me/olena_travel" target="_blank" rel="noopener">
+              <span class="contact-row__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M21 5 3 12l5 2 2 5 3-3 4 3 4-14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+              <span class="contact-row__text"><strong>Telegram</strong>Написати у Telegram</span>
+              <span class="contact-row__go" aria-hidden="true">→</span>
+            </a></li>
+            <li><a class="contact-row" href="mailto:olena.travel@gmail.com">
+              <span class="contact-row__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m5 7 7 5 7-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+              <span class="contact-row__text"><strong>Email</strong>olena.travel@gmail.com</span>
+              <span class="contact-row__go" aria-hidden="true">→</span>
+            </a></li>
+          </ul>
+
+          <div class="contacts__actions reveal" data-reveal data-reveal-delay="4">
+            <button class="cta cta--solid" type="button" data-action="save-contact">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M18 7v6M15 10h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Додати в контакти
+            </button>
+            <button class="cta cta--outline" type="button" data-action="share">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15V4m0 0-3.5 3.5M12 4l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Поділитися
+            </button>
+          </div>
+        </div>
+
+        <aside class="contacts__aside">
+          <div class="info-card reveal" data-reveal data-reveal-delay="3">
+            <div class="info-card__row">
+              <span class="info-card__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg></span>
+              <span><strong>Локація</strong>м. Київ, вул. Хрещатик, 2 (офіс 5)</span>
+            </div>
+            <div class="info-card__row">
+              <span class="info-card__icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span><strong>Графік</strong>Пн–Пт: 09:00–19:00<br>Сб–Нд: 10:00–16:00</span>
+            </div>
+          </div>
+          <div class="map reveal" data-reveal data-reveal-delay="4">
+            <iframe
+              title="Локація офісу на мапі — Київ, вул. Хрещатик, 2"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=30.5180%2C50.4470%2C30.5290%2C50.4530&amp;layer=mapnik&amp;marker=50.4501%2C30.5234"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </aside>
+      </div>
+
+      <footer class="site-foot">
+        <span class="site-foot__brand">Travel with Love</span>
+        <span class="site-foot__copy">© 2025 Олена Ковальчук · Персональний тревел-агент</span>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- ─────────────── TOUR DETAIL DRAWER ─────────────── -->
+  <div class="drawer" id="tour-drawer" hidden>
+    <div class="drawer__backdrop" data-close></div>
+    <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <button class="drawer__close" type="button" data-close aria-label="Закрити">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <div class="drawer__media"><img id="drawer-img" src="" alt="" /></div>
+      <div class="drawer__content">
+        <span class="drawer__tag" id="drawer-tag"></span>
+        <h3 class="drawer__title" id="drawer-title"></h3>
+        <p class="drawer__meta" id="drawer-meta"></p>
+        <ul class="features" id="drawer-features" role="list"></ul>
+        <div class="drawer__foot">
+          <span class="drawer__price" id="drawer-price"></span>
+          <a class="cta cta--solid" id="drawer-cta" href="https://wa.me/380971234567" target="_blank" rel="noopener">Забронювати</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────── BOTTOM NAVIGATION (app shell) ─────────────── -->
+  <nav class="tabbar" aria-label="Головна навігація">
+    <a class="tabbar__item is-active" href="#hero" data-nav="hero">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 11 12 4l8 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9h12v-9" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span>Головна</span>
+    </a>
+    <a class="tabbar__item" href="#destinations" data-nav="destinations">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.7"/></svg>
+      <span>Напрямки</span>
+    </a>
+    <a class="tabbar__item" href="#reviews" data-nav="reviews">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 4 2.3 4.7 5.2.8-3.7 3.6.9 5.1L12 15.8 7.3 18.2l.9-5.1L4.5 9.5l5.2-.8L12 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <span>Відгуки</span>
+    </a>
+    <a class="tabbar__item" href="#contacts" data-nav="contacts">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m5 7 7 5 7-5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span>Контакти</span>
+    </a>
+  </nav>
+
+  <!-- Toast host -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
