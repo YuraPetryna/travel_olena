@@ -98,7 +98,7 @@
             >
           </div>
 
-          <!-- Portrait anchor — name overlaid on the photo -->
+          <!-- Portrait anchor — logo + name overlaid on the photo -->
           <figure
             class="hero__portrait reveal"
             data-reveal
@@ -114,32 +114,35 @@
                 decoding="async"
               />
             </div>
+            <img
+              class="hero__logo"
+              src="logo.svg"
+              alt="Travel with Love"
+              width="120"
+              height="120"
+              decoding="async"
+            />
             <figcaption class="hero__nameplate">
-              <p class="hero__script">Подорожі, які надихають</p>
+              <p class="hero__role">тур агент</p>
               <h1
                 class="hero__title reveal is-in"
                 data-reveal
                 data-reveal-delay="1"
               >
-                Олена <br />Ковальчук
+                Олена <em> <br />Ковальчук</em>
               </h1>
-              <p class="hero__role">тур агент</p>
+              <p class="hero__desc">
+                Створюю незабутні подорожі та найкращий відпочинок для&nbsp;вас
+              </p>
             </figcaption>
           </figure>
 
-          <!-- Short description -->
-          <div class="hero__copy">
-            <p class="hero__tagline reveal" data-reveal data-reveal-delay="2">
-              Створюю незабутні подорожі та найкращий відпочинок для&nbsp;вас
-            </p>
-          </div>
-
-          <!-- Primary action cluster — three identical tiles -->
+          <!-- Primary action cluster: call · add-contact · find-tour -->
           <div class="hero__actions">
             <a
               class="cta cta--tile reveal"
               data-reveal
-              data-reveal-delay="3"
+              data-reveal-delay="2"
               href="tel:+380971234567"
             >
               <span class="cta__ic" aria-hidden="true"
@@ -153,33 +156,10 @@
               ></span>
               <span>Подзвонити</span>
             </a>
-            <a
-              class="cta cta--tile reveal"
-              data-reveal
-              data-reveal-delay="4"
-              href="https://wa.me/380971234567"
-              target="_blank"
-              rel="noopener"
-            >
-              <span class="cta__ic" aria-hidden="true"
-                ><svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Z"
-                    stroke="currentColor"
-                    stroke-width="1.6"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M9 8.5c0 4 2.5 6.5 6.5 6.5.6 0 1-.6.8-1.1l-.5-1.2a.8.8 0 0 0-1-.4l-1 .4a4.6 4.6 0 0 1-2.4-2.4l.4-1a.8.8 0 0 0-.4-1l-1.2-.5c-.5-.2-1.1.2-1.1.8Z"
-                    fill="currentColor"
-                  /></svg
-              ></span>
-              <span>WhatsApp</span>
-            </a>
             <button
               class="cta cta--tile reveal"
               data-reveal
-              data-reveal-delay="5"
+              data-reveal-delay="3"
               type="button"
               data-action="save-contact"
               aria-label="Додати в контакти"
@@ -206,31 +186,25 @@
               ></span>
               <span>Додати<br />в контакти</span>
             </button>
-          </div>
-
-          <!-- Master CTA -->
-          <a
-            class="cta cta--master reveal"
-            data-reveal
-            data-reveal-delay="6"
-            href="#destinations"
-          >
-            <svg
-              class="cta__plane"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
+            <a
+              class="cta cta--tile cta--go reveal"
+              data-reveal
+              data-reveal-delay="4"
+              href="#destinations"
             >
-              <path
-                d="M22 2 11 13M22 2 15 22l-4-9-9-4 20-7Z"
-                stroke="currentColor"
-                stroke-width="1.7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <span>Підібрати тур</span>
-          </a>
+              <span class="cta__ic" aria-hidden="true"
+                ><svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M22 2 11 13M22 2 15 22l-4-9-9-4 20-7Z"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></span>
+              <span>Підібрати<br />тур</span>
+            </a>
+          </div>
 
           <!-- Social proof pillars -->
           <ul

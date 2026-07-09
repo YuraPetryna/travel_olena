@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none" role="img" aria-label="Travel with Love">
+  <defs>
+    <linearGradient id="twl-frond" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fe9df"/>
+      <stop offset="1" stop-color="#2a9e94"/>
+    </linearGradient>
+    <linearGradient id="twl-ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7fe3da"/>
+      <stop offset="1" stop-color="#2a9e94"/>
+    </linearGradient>
+    <radialGradient id="twl-sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#bff3ec"/>
+      <stop offset="1" stop-color="#3fc9bd" stop-opacity="0"/>
+    </radialGradient>
+    <path id="twl-arc" d="M23 75 A 43 43 0 0 0 97 75" />
+  </defs>
+
+  <!-- Badge -->
+  <circle cx="60" cy="60" r="53" fill="#0b1615" fill-opacity="0.6" stroke="url(#twl-ring)" stroke-width="1.8"/>
+  <circle cx="60" cy="60" r="47" stroke="#7fe3da" stroke-width="0.7" stroke-opacity="0.4"/>
+
+  <!-- Sun glow behind the palm -->
+  <circle cx="60" cy="49" r="17" fill="url(#twl-sun)"/>
+
+  <!-- Palm / sprout mark -->
+  <g transform="translate(60 55) scale(1.5) translate(-16 -16)"
+     stroke="url(#twl-frond)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 29c0-7 0-12 0-16" fill="none"/>
+    <path d="M16 13c-1-4-4.5-6.5-9-6 2 3.5 5 5.5 9 6Z" fill="url(#twl-frond)" fill-opacity="0.95"/>
+    <path d="M16 13c1-4 4.5-6.5 9-6-2 3.5-5 5.5-9 6Z" fill="url(#twl-frond)" fill-opacity="0.8"/>
+    <path d="M16 12c-1.5-3.5-1-7 1.5-9 1.5 3 1 6.5-1.5 9Z" fill="url(#twl-frond)" fill-opacity="0.88"/>
+  </g>
+
+  <!-- Waves -->
+  <path d="M40 72c3.4 2.6 6.8 2.6 10.2 0s6.8-2.6 10.2 0 6.8 2.6 10.2 0" stroke="#45c8bd" stroke-width="1.5" stroke-linecap="round" opacity="0.9"/>
+  <path d="M44 78c2.6 2 5.2 2 7.8 0s5.2-2 7.8 0 5.2 2 7.8 0" stroke="#45c8bd" stroke-width="1.2" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- Curved wordmark -->
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="5.9" letter-spacing="1.05"
+        fill="#7fe3da" text-anchor="middle">
+    <textPath href="#twl-arc" startOffset="50%">TRAVEL • WITH • LOVE</textPath>
+  </text>
+</svg>

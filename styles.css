@@ -243,25 +243,33 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .hero__portrait:hover .hero__portrait-frame img { transform: scale(1.06); }
 
-/* Nameplate — gradient-backed name block anchored to the photo's lower edge */
+/* Generated logo — top-right corner of the photo */
+.hero__logo {
+  position: absolute; top: 0.7rem; right: 0.7rem; z-index: 2;
+  width: clamp(58px, 17vw, 82px); height: auto;
+  filter: drop-shadow(0 4px 14px rgba(0,0,0,0.55));
+}
+
+/* Nameplate — name + description over the photo, aligned to the left edge */
 .hero__nameplate {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
   display: flex; flex-direction: column; gap: 0.1rem;
-  padding: clamp(1.5rem, 8vw, 2.5rem) var(--sp-4) var(--sp-4);
+  align-items: flex-start; text-align: left;
+  padding: clamp(1.75rem, 9vw, 2.75rem) var(--sp-4) var(--sp-4);
   background: linear-gradient(to top,
     rgba(7,9,9,0.94) 0%, rgba(7,9,9,0.72) 42%, rgba(7,9,9,0.25) 78%, transparent 100%);
 }
-.hero__script {
-  font-family: var(--font-display); font-style: italic; font-weight: 400;
-  font-size: clamp(1rem, 4vw, 1.25rem); color: var(--sea-mist); letter-spacing: 0.01em;
-}
 .hero__nameplate .hero__title {
-  font-size: clamp(2.1rem, 9.5vw, 3.1rem); line-height: 0.96;
-  margin: 0.1rem 0 0.3rem; letter-spacing: -0.02em;
+  font-size: clamp(2rem, 9vw, 3rem); line-height: 0.96;
+  margin: 0.08rem 0 0.3rem; letter-spacing: -0.02em;
 }
 .hero__role {
   font-size: var(--fs-meta); font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.18em; color: var(--sea);
+}
+.hero__desc {
+  font-size: var(--fs-caption); color: var(--text-soft);
+  max-width: 30ch; line-height: 1.4;
 }
 
 /* Copy block */
@@ -375,6 +383,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
               inset 0 1px 1px rgba(255,255,255,0.12);
 }
 .cta--tile:active { transform: scale(0.96); transition-duration: 100ms; }
+
+/* Accent tile — the primary "Підібрати тур" action */
+.cta--go {
+  color: var(--on-accent); border-color: transparent;
+  background: linear-gradient(120deg, var(--sea-mist), var(--sea));
+  box-shadow: 0 16px 30px -14px rgba(63,201,189,0.5), inset 0 1px 1px rgba(255,255,255,0.4);
+}
+.cta--go .cta__ic { color: var(--on-accent); background: rgba(6,32,29,0.22); box-shadow: none; }
+.cta--go:hover { border-color: transparent; box-shadow: 0 20px 38px -14px rgba(63,201,189,0.65), inset 0 1px 1px rgba(255,255,255,0.5); }
 
 .cta__plane { width: 20px; height: 20px; }
 
@@ -799,23 +816,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
     height: 100%; gap: var(--sp-2);
   }
 
-  /* Desktop-only extras hidden on the mobile Home screen */
-  .hero .pillars,
+  /* Brand hidden on mobile — the logo (top-right of photo) stands in for it.
+     Tags stay desktop-only; pillars ARE shown (below the buttons). */
+  .hero__brand,
   .hero .tags { display: none; }
 
-  .hero__brand { margin-top: 0; flex: 0 0 auto; }
-
-  /* Photo carries the name overlay and absorbs the free vertical space */
+  /* Photo carries the logo + name overlay and absorbs the free vertical space */
   .hero__portrait { margin-top: 0; flex: 1 1 auto; min-height: 0; }
   .hero__portrait-frame { height: 100%; aspect-ratio: auto; }
   .hero__portrait-frame img { height: 100%; object-position: 50% 22%; }
-
-  /* Short description under the photo */
-  .hero__copy { flex: 0 0 auto; }
-  .hero__tagline {
-    font-size: var(--fs-caption); color: var(--text-soft);
-    text-align: center; max-width: none; line-height: 1.45;
-  }
 
   /* Three identical action tiles */
   .hero__actions {
@@ -823,8 +832,12 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
     gap: 0.5rem; flex: 0 0 auto;
   }
 
-  /* Full-width primary CTA */
-  .cta--master { margin-top: 0; width: 100%; flex: 0 0 auto; padding-block: 1rem; }
+  /* Social-proof pillars — compact, pinned below the buttons */
+  .hero .pillars {
+    display: grid; flex: 0 0 auto; margin: 0;
+    padding: var(--sp-3); gap: var(--sp-2);
+  }
+  .hero .pillars .pillar__num { font-size: clamp(1.3rem, 6vw, 1.7rem); }
 }
 
 /* Short viewports (landscape phones) — allow gentle scroll instead of clipping */
@@ -843,30 +856,27 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
   .hero { padding-block: var(--sp-6) var(--sp-8); }
   .hero__inner {
-    grid-template-columns: 6fr 5fr;      /* supporting column · portrait+name */
+    grid-template-columns: 5fr 6fr;      /* supporting column · portrait+name */
     grid-template-areas:
       "brand    portrait"
-      "copy     portrait"
       "actions  portrait"
-      "master   portrait"
       "pillars  portrait"
       "tags     tags";
     column-gap: var(--sp-8);
-    row-gap: var(--sp-4);
-    align-items: start;
+    row-gap: var(--sp-5);
+    align-items: center;
+    align-content: space-between;
   }
-  .hero__brand    { grid-area: brand; }
-  .hero__copy     { grid-area: copy; align-self: start; }
+  .hero__brand    { grid-area: brand; align-self: start; }
   .hero__actions  { grid-area: actions; }
-  .hero__portrait { grid-area: portrait; margin-top: 0; align-self: stretch; }
-  .hero__portrait-frame { aspect-ratio: 3 / 4; }
-  .pillars        { grid-area: pillars; margin-top: var(--sp-3); }
-  .tags           { grid-area: tags; margin-top: var(--sp-5); }
+  .hero__portrait { grid-area: portrait; margin-top: 0; align-self: stretch; height: 560px; }
+  .hero__portrait-frame { height: 100%; aspect-ratio: auto; }
+  .pillars        { grid-area: pillars; margin-top: 0; }
+  .tags           { grid-area: tags; margin-top: var(--sp-4); }
 
-  /* Supporting column typography + tiles */
-  .hero__copy .hero__tagline { font-size: var(--fs-lead); color: var(--text-soft); max-width: 34ch; margin-top: var(--sp-3); }
-  .hero__actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); max-width: 420px; margin-top: var(--sp-2); }
-  .cta--master { grid-area: master; width: auto; justify-self: start; align-self: start; padding-inline: 2.25rem; margin-top: var(--sp-2); }
+  /* Supporting column tiles */
+  .hero__actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); max-width: 440px; }
+  .hero__logo { width: clamp(72px, 7vw, 96px); top: 1rem; right: 1rem; }
 
   .section { padding-block: var(--sp-7); }
 
