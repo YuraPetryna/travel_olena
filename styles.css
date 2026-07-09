@@ -225,39 +225,43 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .brand__amp { font-style: italic; font-weight: 400; color: var(--sea); }
 
-/* Portrait */
-.hero__portrait { position: relative; margin-top: var(--sp-2); }
-.hero__portrait-frame {
-  position: relative; border-radius: var(--r-xl); overflow: hidden;
-  aspect-ratio: 4 / 3.4;
-  box-shadow: 0 30px 60px -24px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.12);
+/* Portrait — name overlaid on the photo */
+.hero__portrait {
+  position: relative; margin-top: var(--sp-2);
+  border-radius: var(--r-xl); overflow: hidden;
+  box-shadow: 0 30px 60px -24px rgba(0,0,0,0.7);
   border: 1px solid rgba(255,255,255,0.08);
 }
-.hero__portrait-frame::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 45%, rgba(9,11,11,0.55) 100%);
-  pointer-events: none;
+.hero__portrait-frame {
+  position: relative; border-radius: inherit; overflow: hidden;
+  aspect-ratio: 4 / 3.4; height: 100%;
 }
 .hero__portrait-frame img {
-  width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 26%;
   transform: scale(1.02);
   transition: transform 0.8s var(--ease);
 }
 .hero__portrait:hover .hero__portrait-frame img { transform: scale(1.06); }
 
-.hero__badge {
-  position: absolute; left: 0.9rem; bottom: 0.9rem; z-index: 1;
-  display: inline-flex; align-items: center; gap: 0.45rem;
-  padding: 0.4rem 0.75rem; border-radius: var(--r-pill);
-  font-size: var(--fs-meta); font-weight: 600; letter-spacing: 0.02em;
-  color: var(--text);
-  background: var(--glass-bg); backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: var(--glass-brd); box-shadow: var(--glass-shadow);
+/* Nameplate — gradient-backed name block anchored to the photo's lower edge */
+.hero__nameplate {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  display: flex; flex-direction: column; gap: 0.1rem;
+  padding: clamp(1.5rem, 8vw, 2.5rem) var(--sp-4) var(--sp-4);
+  background: linear-gradient(to top,
+    rgba(7,9,9,0.94) 0%, rgba(7,9,9,0.72) 42%, rgba(7,9,9,0.25) 78%, transparent 100%);
 }
-.hero__badge-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--sea);
-  box-shadow: 0 0 0 3px rgba(63,201,189,0.25), 0 0 10px rgba(63,201,189,0.6);
+.hero__script {
+  font-family: var(--font-display); font-style: italic; font-weight: 400;
+  font-size: clamp(1rem, 4vw, 1.25rem); color: var(--sea-mist); letter-spacing: 0.01em;
+}
+.hero__nameplate .hero__title {
+  font-size: clamp(2.1rem, 9.5vw, 3.1rem); line-height: 0.96;
+  margin: 0.1rem 0 0.3rem; letter-spacing: -0.02em;
+}
+.hero__role {
+  font-size: var(--fs-meta); font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.18em; color: var(--sea);
 }
 
 /* Copy block */
@@ -345,6 +349,35 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .cta--master:hover .cta__arrow { transform: translateX(4px); }
 .cta--master:active { transform: scale(0.97); transition-duration: 100ms; }
 
+/* Mobile-only bottom action bar (shown inside the single-screen Home tab) */
+.hero__actions { display: none; }
+
+/* Three identical action tiles (icon over label) — the hero cluster */
+.cta--tile {
+  flex-direction: column; gap: 0.45rem;
+  padding: 0.85rem 0.4rem;
+  border-radius: var(--r-md);
+  color: var(--text); text-align: center;
+  font-size: var(--fs-meta); font-weight: 600; line-height: 1.15; letter-spacing: 0.01em;
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-brd); box-shadow: var(--glass-shadow);
+}
+.cta--tile .cta__ic {
+  display: grid; place-items: center; width: 42px; height: 42px;
+  border-radius: 50%; color: var(--sea); background: var(--tint-sea);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+.cta--tile .cta__ic svg { width: 22px; height: 22px; }
+.cta--tile:hover {
+  transform: translateY(-3px); border-color: rgba(63, 201, 189, 0.3);
+  box-shadow: 0 18px 34px -18px rgba(0,0,0,0.7), 0 0 20px rgba(63,201,189,0.15),
+              inset 0 1px 1px rgba(255,255,255,0.12);
+}
+.cta--tile:active { transform: scale(0.96); transition-duration: 100ms; }
+
+.cta__plane { width: 20px; height: 20px; }
+
 /* Social proof pillars */
 .pillars {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -400,10 +433,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 /* ---------- 6. BOTTOM NAV (app shell) ---------- */
 .tabbar {
   position: fixed; left: 50%; bottom: 0; transform: translateX(-50%);
-  z-index: 100; width: min(100% - 1rem, 460px);
+  z-index: 100; width: min(100% - 0.75rem, 500px);
   margin-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  padding: 0.4rem;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;   /* adapts to N tabs */
+  padding: 0.35rem;
   border-radius: var(--r-lg);
   background: rgba(13,13,13,0.6);
   backdrop-filter: blur(24px) saturate(180%);
@@ -413,14 +446,15 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .tabbar__item {
   position: relative;
-  display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
-  min-height: 56px; justify-content: center;
+  display: flex; flex-direction: column; align-items: center; gap: 0.18rem;
+  min-height: 54px; justify-content: center;
+  padding-inline: 0.15rem;
   border-radius: var(--r-sm);
-  font-size: 0.66rem; font-weight: 600; letter-spacing: 0.01em;
-  color: var(--text-soft);
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.005em;
+  color: var(--text-soft); text-align: center; white-space: nowrap;
   transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
-.tabbar__item svg { width: 22px; height: 22px; transition: transform var(--dur) var(--ease); }
+.tabbar__item svg { width: 21px; height: 21px; transition: transform var(--dur) var(--ease); }
 .tabbar__item.is-active { color: var(--sea); }
 .tabbar__item.is-active svg { transform: translateY(-1px) scale(1.05); filter: drop-shadow(0 0 8px rgba(63,201,189,0.5)); }
 .tabbar__item.is-active::before {
@@ -749,6 +783,58 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .drawer__price { font-family: var(--font-display); font-size: 1.75rem; font-weight: 600; color: var(--text); }
 .drawer__foot .cta { padding: 0.9rem 1.6rem; }
 
+/* ---------- 8c. MOBILE HOME — SINGLE SCREEN, NO SCROLL ---------- */
+@media (max-width: 899px) {
+  /* Fixed height = viewport − nav; overflow clipped → guaranteed no page scroll.
+     The photo is the flex element that gives/absorbs space so everything fits. */
+  .hero {
+    height: calc(100dvh - var(--tabbar-h) - env(safe-area-inset-bottom));
+    padding-block: 0.6rem 0.5rem;
+    overflow: hidden;
+  }
+  .hero[data-panel].is-active { display: flex; }   /* row flex; inner stretches to full height */
+
+  .hero__inner {
+    display: flex; flex-direction: column;
+    height: 100%; gap: var(--sp-2);
+  }
+
+  /* Desktop-only extras hidden on the mobile Home screen */
+  .hero .pillars,
+  .hero .tags { display: none; }
+
+  .hero__brand { margin-top: 0; flex: 0 0 auto; }
+
+  /* Photo carries the name overlay and absorbs the free vertical space */
+  .hero__portrait { margin-top: 0; flex: 1 1 auto; min-height: 0; }
+  .hero__portrait-frame { height: 100%; aspect-ratio: auto; }
+  .hero__portrait-frame img { height: 100%; object-position: 50% 22%; }
+
+  /* Short description under the photo */
+  .hero__copy { flex: 0 0 auto; }
+  .hero__tagline {
+    font-size: var(--fs-caption); color: var(--text-soft);
+    text-align: center; max-width: none; line-height: 1.45;
+  }
+
+  /* Three identical action tiles */
+  .hero__actions {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem; flex: 0 0 auto;
+  }
+
+  /* Full-width primary CTA */
+  .cta--master { margin-top: 0; width: 100%; flex: 0 0 auto; padding-block: 1rem; }
+}
+
+/* Short viewports (landscape phones) — allow gentle scroll instead of clipping */
+@media (max-width: 899px) and (max-height: 620px) {
+  .hero { height: auto; min-height: calc(100dvh - var(--tabbar-h) - env(safe-area-inset-bottom)); overflow: visible; }
+  .hero__portrait { min-height: 150px; }
+  .hero__actions { gap: 0.4rem; }
+  .cta--tile { padding: 0.6rem 0.3rem; }
+}
+
 /* ---------- 9. DESKTOP COMPOSITION (own layout) ---------- */
 @media (min-width: 900px) {
   body { padding-bottom: 0; }
@@ -757,10 +843,12 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
   .hero { padding-block: var(--sp-6) var(--sp-8); }
   .hero__inner {
-    grid-template-columns: 7fr 5fr;      /* asymmetric editorial split */
+    grid-template-columns: 6fr 5fr;      /* supporting column · portrait+name */
     grid-template-areas:
       "brand    portrait"
       "copy     portrait"
+      "actions  portrait"
+      "master   portrait"
       "pillars  portrait"
       "tags     tags";
     column-gap: var(--sp-8);
@@ -768,14 +856,17 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
     align-items: start;
   }
   .hero__brand    { grid-area: brand; }
-  .hero__copy     { grid-area: copy; align-self: center; }
-  .hero__portrait { grid-area: portrait; margin-top: 0; }
+  .hero__copy     { grid-area: copy; align-self: start; }
+  .hero__actions  { grid-area: actions; }
+  .hero__portrait { grid-area: portrait; margin-top: 0; align-self: stretch; }
   .hero__portrait-frame { aspect-ratio: 3 / 4; }
-  .pillars        { grid-area: pillars; margin-top: var(--sp-4); }
-  .tags           { grid-area: tags; margin-top: var(--sp-6); }
+  .pillars        { grid-area: pillars; margin-top: var(--sp-3); }
+  .tags           { grid-area: tags; margin-top: var(--sp-5); }
 
-  .cta--master { width: auto; align-self: start; padding-inline: 2.25rem; }
-  .quick { gap: var(--sp-4); }
+  /* Supporting column typography + tiles */
+  .hero__copy .hero__tagline { font-size: var(--fs-lead); color: var(--text-soft); max-width: 34ch; margin-top: var(--sp-3); }
+  .hero__actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); max-width: 420px; margin-top: var(--sp-2); }
+  .cta--master { grid-area: master; width: auto; justify-self: start; align-self: start; padding-inline: 2.25rem; margin-top: var(--sp-2); }
 
   .section { padding-block: var(--sp-7); }
 
@@ -808,7 +899,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   /* Bottom nav becomes a floating top pill, still app-grade */
   .tabbar { width: auto; bottom: auto; top: 1.25rem;
             left: 50%; margin: 0;
-            grid-auto-flow: column; grid-template-columns: repeat(4, auto); }
+            grid-auto-flow: column; grid-auto-columns: auto; }
   .tabbar__item { flex-direction: row; gap: 0.5rem; padding: 0 1rem; min-height: 44px; font-size: 0.8rem; }
   .tabbar__item svg { width: 18px; height: 18px; }
   .toast { bottom: 1.5rem; }
