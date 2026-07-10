@@ -17,13 +17,13 @@
   const AmbientSea = (() => {
     let canvas, ctx, w, h, dpr, particles, raf = null, running = false;
 
-    // Dark-mode glow motes — teal/mist tints, screen-blended (see .ambient__canvas)
-    const PALETTE = ["63,201,189", "127,227,218", "217,195,162"]; // sea, sea-mist, sand
+    // Light-mode motes — teal / aqua / warm-sand tints, multiply-blended (see .ambient__canvas)
+    const PALETTE = ["47,184,172", "88,196,214", "240,196,142"]; // sea-teal, aqua, sand
 
     const config = {
-      density: 0.00008,   // particles per pixel (auto-scaled, capped)
-      min: 26,
-      max: 90,
+      density: 0.00014,   // particles per pixel (auto-scaled, capped)
+      min: 40,
+      max: 130,
     };
 
     function size() {
@@ -44,12 +44,12 @@
       return {
         x: Math.random() * w,
         y: scatter ? Math.random() * h : h + 20,
-        r: 1 + Math.random() * 2.6,
-        speed: 0.12 + Math.random() * 0.35,   // gentle upward flow
-        sway: 0.4 + Math.random() * 1.1,      // horizontal drift amplitude
+        r: 1.4 + Math.random() * 3.4,
+        speed: 0.18 + Math.random() * 0.5,    // livelier upward flow
+        sway: 0.6 + Math.random() * 1.5,      // horizontal drift amplitude
         phase: Math.random() * Math.PI * 2,
-        freq: 0.002 + Math.random() * 0.004,
-        alpha: 0.05 + Math.random() * 0.14,   // fainter on dark; screen blend supplies the glow
+        freq: 0.0025 + Math.random() * 0.005,
+        alpha: 0.1 + Math.random() * 0.22,    // more noticeable on light (multiply)
         tint: PALETTE[(Math.random() * PALETTE.length) | 0],
       };
     }
