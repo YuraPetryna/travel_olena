@@ -194,16 +194,23 @@
         else t.removeAttribute("aria-current");
       });
 
+      // Reset the incoming panel's reveals WHILE it is still hidden
+      // (display:none → the reset is invisible, no fade-out), so the staggered
+      // top-to-bottom cascade replays cleanly on EVERY entry, not just the first.
+      targets.forEach((p) => Reveal.reset(p));
+
       document.querySelectorAll("[data-panel]").forEach((p) => {
         p.classList.toggle("is-active", p.dataset.panel === id);
       });
 
       current = id;
-      targets.forEach((p) => Reveal.play(p));
+      // Reset scroll BEFORE the panel paints so the fade/slide starts clean
+      // (a smooth-scroll competing with the entrance is what read as janky).
+      window.scrollTo(0, 0);
+      targets.forEach((p) => { Reveal.play(p); CountUp.play(p); });
 
       if (!opts.silent) {
         try { history.replaceState(null, "", `#${id}`); } catch (_) { /* noop */ }
-        window.scrollTo({ top: 0, behavior: prefersReduced.matches ? "auto" : "smooth" });
       }
     }
 
@@ -241,18 +248,32 @@
   /* -----------------------------------------------------------
      Reveal — cinematic staggered entrance, driven by TabView.
      prime() wires each node's --reveal-i stagger once; play(root)
-     (re)triggers the choreography whenever its panel is shown.
+     animates a panel's content in the FIRST time it is shown, then
+     leaves it in place. Re-entering a tab relies on the panel's own
+     fade/slide (tab-in) — so there is no flash/replay = smooth.
   ----------------------------------------------------------- */
   const Reveal = (() => {
+    const collect = (root) => {
+      const nodes = Array.from(root.querySelectorAll("[data-reveal]"));
+      if (root.hasAttribute("data-reveal")) nodes.unshift(root);
+      return nodes;
+    };
+
     function prime() {
       document.querySelectorAll("[data-reveal][data-reveal-delay]").forEach((n) =>
         n.style.setProperty("--reveal-i", n.dataset.revealDelay)
       );
     }
 
+    // Called while the panel is still hidden — instantly clears the entered
+    // state with no visible transition, so play() can re-run the cascade.
+    function reset(root) {
+      if (prefersReduced.matches) return;
+      collect(root).forEach((n) => n.classList.remove("is-in"));
+    }
+
     function play(root) {
-      const nodes = Array.from(root.querySelectorAll("[data-reveal]"));
-      if (root.hasAttribute("data-reveal")) nodes.unshift(root);
+      const nodes = collect(root);
       if (!nodes.length) return;
 
       if (prefersReduced.matches) {
@@ -260,14 +281,52 @@
         return;
       }
 
-      // Reset, then flip on the next frame so re-entering a tab replays.
-      nodes.forEach((n) => n.classList.remove("is-in"));
+      // Flip on the next frames (after display flips to block) so the reveal
+      // animates from its hidden state — a clean staggered entrance every time.
       requestAnimationFrame(() =>
         requestAnimationFrame(() => nodes.forEach((n) => n.classList.add("is-in")))
       );
     }
 
-    return { prime, play };
+    return { prime, reset, play };
+  })();
+
+  /* -----------------------------------------------------------
+     CountUp — animates numeric stats (years, clients) from 0 up to
+     their target each time their panel is shown. Driven by TabView.
+  ----------------------------------------------------------- */
+  const CountUp = (() => {
+    const DUR = 1100, DELAY = 400;
+
+    function play(root) {
+      const nums = root.querySelectorAll("[data-count]");
+      if (!nums.length) return;
+
+      nums.forEach((el) => {
+        const target = parseFloat(el.dataset.count);
+        if (isNaN(target)) return;
+        if (prefersReduced.matches) { el.textContent = String(target); return; }
+
+        el.textContent = "0";
+        const token = {};
+        el._ctToken = token;                 // supersede any in-flight run
+        let startTs = null;
+        const step = (now) => {
+          if (el._ctToken !== token) return; // a newer play() took over
+          if (startTs === null) startTs = now;
+          const t = Math.min(1, (now - startTs) / DUR);
+          const eased = 1 - Math.pow(1 - t, 3);   // ease-out-cubic
+          el.textContent = String(Math.round(target * eased));
+          if (t < 1) requestAnimationFrame(step);
+          else el.textContent = String(target);
+        };
+        setTimeout(() => {
+          if (el._ctToken === token) requestAnimationFrame(step);
+        }, DELAY);
+      });
+    }
+
+    return { play };
   })();
 
   /* -----------------------------------------------------------
@@ -352,8 +411,17 @@
       const t = TOURS[id];
       if (!t || !drawer) return;
       lastFocus = document.activeElement;
-      document.getElementById("drawer-img").src = t.img;
-      document.getElementById("drawer-img").alt = t.title;
+
+      // Hide the previous image and only reveal the new one once it is fully
+      // decoded — prevents the "old image flashes, then swaps" glitch.
+      const img = document.getElementById("drawer-img");
+      img.classList.remove("is-loaded");
+      img.alt = t.title;
+      img.src = t.img;
+      const reveal = () => img.classList.add("is-loaded");
+      if (img.decode) img.decode().then(reveal).catch(reveal);
+      else { img.onload = reveal; if (img.complete) reveal(); }
+
       document.getElementById("drawer-tag").textContent = t.tag;
       document.getElementById("drawer-title").textContent = t.title;
       document.getElementById("drawer-meta").textContent = t.meta;
@@ -382,6 +450,9 @@
       if (!drawer) return;
       panel = drawer.querySelector(".drawer__panel");
 
+      // Warm the browser cache so the first open decodes instantly.
+      Object.values(TOURS).forEach((t) => { const im = new Image(); im.src = t.img; });
+
       document.querySelectorAll("[data-tour]").forEach((btn) =>
         btn.addEventListener("click", () => open(btn.dataset.tour))
       );
@@ -392,6 +463,63 @@
         if (e.key === "Escape" && !drawer.hidden) close();
       });
     }
+    return { init };
+  })();
+
+  /* -----------------------------------------------------------
+     CallMenu — popover of contact channels above the "Подзвонити"
+     tile (call · Viber · WhatsApp · Telegram).
+  ----------------------------------------------------------- */
+  const CallMenu = (() => {
+    let menu, panel, trigger, lastFocus;
+
+    function position() {
+      if (!trigger) return;
+      const r = trigger.getBoundingClientRect();
+      const pw = panel.offsetWidth || 300;
+      const left = Math.max(12, Math.min(r.left, window.innerWidth - pw - 12));
+      panel.style.left = `${left}px`;
+      panel.style.bottom = `${window.innerHeight - r.top + 12}px`;
+    }
+
+    function open(t) {
+      trigger = t;
+      lastFocus = document.activeElement;
+      menu.hidden = false;
+      position();
+      requestAnimationFrame(() => menu.classList.add("is-open"));
+      document.addEventListener("keydown", onKey);
+    }
+
+    function close() {
+      if (menu.hidden) return;
+      menu.classList.remove("is-open");
+      const done = () => { menu.hidden = true; panel.removeEventListener("transitionend", done); };
+      panel.addEventListener("transitionend", done);
+      document.removeEventListener("keydown", onKey);
+      if (lastFocus) lastFocus.focus();
+    }
+
+    function onKey(e) { if (e.key === "Escape") close(); }
+
+    function init() {
+      menu = document.getElementById("call-menu");
+      if (!menu) return;
+      panel = menu.querySelector(".call-menu__panel");
+
+      document.querySelectorAll("[data-call]").forEach((btn) =>
+        btn.addEventListener("click", (e) => { e.preventDefault(); open(btn); })
+      );
+      menu.querySelectorAll("[data-call-close]").forEach((el) =>
+        el.addEventListener("click", close)
+      );
+      // Close shortly after a channel is chosen (lets the link fire first).
+      menu.querySelectorAll(".call-opt").forEach((a) =>
+        a.addEventListener("click", () => setTimeout(close, 60))
+      );
+      window.addEventListener("resize", () => { if (!menu.hidden) position(); }, { passive: true });
+    }
+
     return { init };
   })();
 
@@ -487,6 +615,7 @@
     TabView.init();
     TourFilter.init();
     TourDrawer.init();
+    CallMenu.init();
     SaveContact.init();
     ShareCard.init();
     SaveToggle.init();
