@@ -609,6 +609,24 @@
     return { init };
   })();
 
+  /* -----------------------------------------------------------
+     ReviewsToggle — expand/collapse the full testimonials list.
+  ----------------------------------------------------------- */
+  const ReviewsToggle = (() => {
+    function init() {
+      const btn = document.querySelector("[data-reviews-toggle]");
+      const grid = document.querySelector(".review-grid");
+      if (!btn || !grid) return;
+      const label = btn.querySelector(".btn-ghost__label");
+      btn.addEventListener("click", () => {
+        const open = grid.classList.toggle("is-expanded");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        if (label) label.textContent = open ? "Згорнути відгуки" : "Показати всі відгуки";
+      });
+    }
+    return { init };
+  })();
+
   /* ----------------------------- BOOT ----------------------------- */
   function boot() {
     AmbientSea.init();
@@ -619,6 +637,7 @@
     SaveContact.init();
     ShareCard.init();
     SaveToggle.init();
+    ReviewsToggle.init();
   }
 
   if (document.readyState === "loading") {
