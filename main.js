@@ -17,8 +17,18 @@
   const AmbientSea = (() => {
     let canvas, ctx, w, h, dpr, particles, raf = null, running = false;
 
-    // Light-mode motes — teal / aqua / warm-sand tints, multiply-blended (see .ambient__canvas)
-    const PALETTE = ["47,184,172", "88,196,214", "240,196,142"]; // sea-teal, aqua, sand
+    // Mote tints come from the CSS token --ambient-tints ("r,g,b | r,g,b | …")
+    // so the canvas re-themes with the rest of the palette. Falls back to lavender.
+    const PALETTE = (() => {
+      const raw = getComputedStyle(document.documentElement)
+        .getPropertyValue("--ambient-tints")
+        .trim();
+      const tints = raw
+        .split("|")
+        .map((s) => s.trim().replace(/\s+/g, ""))
+        .filter(Boolean);
+      return tints.length ? tints : ["176,150,235", "210,195,246", "226,196,232"];
+    })();
 
     const config = {
       density: 0.00014,   // particles per pixel (auto-scaled, capped)

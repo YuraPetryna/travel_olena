@@ -1,0 +1,91 @@
+/* =============================================================
+   THEME OVERRIDE — COSMIC / VANILLA (palette 2)
+   Loaded AFTER styles.css. Re-themes the token surface only:
+   deep cosmic-charcoal canvas + pale vanilla accents (dark theme).
+   Cosmic  #23212C  ·  Vanilla  #F1FEC8
+   ============================================================= */
+:root {
+  /* Channel tokens (R,G,B) */
+  --sea-rgb: 216, 232, 154; /* soft vanilla accent */
+  --accent-rgb: 232, 245, 176; /* bright vanilla fill / tint */
+  --glow-rgb: 241, 254, 200; /* vanilla glow (borders/shadows) */
+  --ink-rgb: 0, 0, 0; /* pure black — shadows & image scrims on dark */
+  --line-rgb: 241, 254, 200; /* vanilla hairlines / borders / rails */
+  --portrait-rgb: 8, 7, 12; /* near-black scrim over the portrait photo */
+  --menu-rgb: 20, 19, 27; /* deep cosmic — call-menu / tooltip */
+  --blob-2-rgb: 200, 214, 150; /* ambient blob — mid vanilla */
+  --blob-warm-rgb: 168, 150, 220; /* ambient blob — cosmic violet haze */
+  --blob-coral-rgb: 120, 140, 200; /* ambient blob — nebula blue */
+
+  /* Ambient canvas particle tints (read by main.js) */
+  --ambient-tints: 241, 254, 200 | 200, 214, 150 | 168, 150, 220;
+
+  /* Solid palette — cosmic canvas / vanilla accents / warm off-white type */
+  --bg: #1a1922; /* cosmic canvas */
+  --bg-soft: #23212c; /* Cosmic (palette 2) */
+  --bg-elev: #2b2937;
+  --sea: #d8e89a; /* vanilla — text/icon accent on dark */
+  --sea-bright: #e8f5b0; /* vibrant vanilla fill */
+  --sea-deep: #b9cf6e;
+  --sea-mist: #f1fec8; /* Vanilla (palette 2) */
+  --sand: #8f8ea8; /* cool cosmic grey, used sparingly */
+  --text: #edefe0; /* warm off-white */
+  --text-soft: #a7a99a;
+  --text-dim: #6f7263;
+  --on-accent: #23212c; /* cosmic ink on bright vanilla fills */
+  --line: rgba(var(--line-rgb), 0.12);
+
+  --star-gold: #f0d15a; /* warmer gold reads better on cosmic */
+  --star-empty: rgba(var(--line-rgb), 0.18);
+  --heart: #ff7a90;
+
+  /* Ambient background field — cosmic nebula */
+  --amb-blend: screen; /* additive glow on dark canvas */
+  --amb-bg:
+    radial-gradient(120% 90% at 82% 6%, #2c2a3a 0%, transparent 58%),
+    radial-gradient(90% 70% at 10% 100%, #201f2b 0%, transparent 60%),
+    linear-gradient(180deg, #1c1b25 0%, #14131b 100%);
+
+  /* Glass token — dark cosmic glass */
+  --glass-bg: rgba(43, 41, 55, 0.52);
+  --glass-brd: 1px solid rgba(241, 254, 200, 0.14);
+  --glass-blur: blur(20px) saturate(130%);
+  --glass-shadow:
+    0 14px 34px -16px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(241, 254, 200, 0.1);
+  --glass-bg-lo: rgba(43, 41, 55, 0.38);
+  --glass-blur-lo: blur(10px) saturate(120%);
+
+  --tint-sea: rgba(var(--accent-rgb), 0.12);
+  --tint-sea-hi: rgba(var(--accent-rgb), 0.2);
+
+  /* Bottom tabbar — solid-ish dark panel + vanilla hairline so it reads
+     as a distinct control instead of blending into the cosmic canvas */
+  --tabbar-bg: rgba(28, 27, 38, 0.9);
+  --tabbar-brd: 1px solid rgba(241, 254, 200, 0.16);
+  --tabbar-hi: rgba(241, 254, 200, 0.07);
+
+  /* Bottom-sheet (tour drawer) + close chip — solid cosmic panel */
+  --sheet-bg: rgba(30, 29, 40, 0.97);
+  --sheet-brd: rgba(241, 254, 200, 0.16);
+  --chip-bg: rgba(58, 56, 72, 0.8);
+
+  color-scheme: dark;
+}
+
+/* Lift inactive tab labels/icons clear of the dark panel */
+.tabbar__item {
+  color: #b7baa8;
+}
+.tabbar__item.is-active {
+  color: var(--sea-mist);
+}
+.tabbar__item.is-active::before {
+  background: rgba(var(--accent-rgb), 0.16);
+}
+
+/* On dark glass the white inner-highlights in a few inline styles read a
+   touch harsh — soften the map/overlay filter that was tuned for light. */
+.map iframe {
+  filter: grayscale(0.2) brightness(0.85) contrast(1.05);
+}

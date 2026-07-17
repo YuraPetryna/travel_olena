@@ -1,23 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none" role="img" aria-label="Travel with Love">
   <defs>
     <linearGradient id="twl-frond" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#d0bdf5"/>
-      <stop offset="1" stop-color="#6746b8"/>
+      <stop offset="0" stop-color="#f4ffcf"/>
+      <stop offset="1" stop-color="#b9cf6e"/>
     </linearGradient>
     <linearGradient id="twl-ring" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#d2c3f6"/>
-      <stop offset="1" stop-color="#6746b8"/>
+      <stop offset="0" stop-color="#f1fec8"/>
+      <stop offset="1" stop-color="#b9cf6e"/>
     </linearGradient>
     <radialGradient id="twl-sun" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#e3d6fb"/>
-      <stop offset="1" stop-color="#9b7de6" stop-opacity="0"/>
+      <stop offset="0" stop-color="#f7ffe0"/>
+      <stop offset="1" stop-color="#d8e89a" stop-opacity="0"/>
     </radialGradient>
     <path id="twl-arc" d="M23 75 A 43 43 0 0 0 97 75" />
   </defs>
 
   <!-- Badge -->
-  <circle cx="60" cy="60" r="53" fill="#1a1230" fill-opacity="0.6" stroke="url(#twl-ring)" stroke-width="1.8"/>
-  <circle cx="60" cy="60" r="47" stroke="#d2c3f6" stroke-width="0.7" stroke-opacity="0.4"/>
+  <circle cx="60" cy="60" r="53" fill="#14131b" fill-opacity="0.72" stroke="url(#twl-ring)" stroke-width="1.8"/>
+  <circle cx="60" cy="60" r="47" stroke="#f1fec8" stroke-width="0.7" stroke-opacity="0.4"/>
 
   <!-- Sun glow behind the palm -->
   <circle cx="60" cy="49" r="17" fill="url(#twl-sun)"/>
@@ -32,12 +32,12 @@
   </g>
 
   <!-- Waves -->
-  <path d="M40 72c3.4 2.6 6.8 2.6 10.2 0s6.8-2.6 10.2 0 6.8 2.6 10.2 0" stroke="#8b6fd6" stroke-width="1.5" stroke-linecap="round" opacity="0.9"/>
-  <path d="M44 78c2.6 2 5.2 2 7.8 0s5.2-2 7.8 0 5.2 2 7.8 0" stroke="#8b6fd6" stroke-width="1.2" stroke-linecap="round" opacity="0.55"/>
+  <path d="M40 72c3.4 2.6 6.8 2.6 10.2 0s6.8-2.6 10.2 0 6.8 2.6 10.2 0" stroke="#d8e89a" stroke-width="1.5" stroke-linecap="round" opacity="0.9"/>
+  <path d="M44 78c2.6 2 5.2 2 7.8 0s5.2-2 7.8 0 5.2 2 7.8 0" stroke="#d8e89a" stroke-width="1.2" stroke-linecap="round" opacity="0.55"/>
 
   <!-- Curved wordmark -->
   <text font-family="Georgia, 'Times New Roman', serif" font-size="5.9" letter-spacing="1.05"
-        fill="#d2c3f6" text-anchor="middle">
+        fill="#f1fec8" text-anchor="middle">
     <textPath href="#twl-arc" startOffset="50%">TRAVEL • WITH • LOVE</textPath>
   </text>
 </svg>
